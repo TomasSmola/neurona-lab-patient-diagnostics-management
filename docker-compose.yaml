@@ -1,0 +1,31 @@
+version: '1.0'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: patient_diagnostics_management
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  app:
+    build: .
+    environment:
+      - ASPNETCORE_URLS=http://+:8080;https://+:8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=yourpassword
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Username=postgres;Password=postgres;Database=patient_diagnostics_management
+    ports:
+      - "32770:8080"  # HTTP
+      - "32771:8081"  # HTTPS
+    volumes:
+      - ./https:/https
+    links:
+      - db
+
+volumes:
+  db_data:
