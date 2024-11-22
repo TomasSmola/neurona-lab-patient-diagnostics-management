@@ -2,6 +2,8 @@
 
 This project is a simple web application that allows users to manage patients and their diagnostics. It is built using ASP.NET and React.
 
+[C4 Model](./docs/c4-model.md)
+
 ## Prerequisites
 
 - Docker
